@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './styles';
 
-export default function Home() {
+export default function Login(props) {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
@@ -40,7 +40,7 @@ export default function Home() {
         style={styles.input}
       />
       <TouchableOpacity
-        onPress={() => false}
+        onPress={() => props.navigation.navigate('Home')}
         style={styles.btn}
       >
         <Text style={styles.btnText}>ENTRAR</Text>

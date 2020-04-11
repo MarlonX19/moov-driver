@@ -2,12 +2,15 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import MapView from 'react-native-maps';
 
+import Header from '../../components/Header';
+
 import styles from './styles';
 
-export default function Home() {
+export default function Home(props) {
 
   return (
     <View style={styles.container}>
+      <Header navigation={props.navigation} />
       <MapView
         style={{ flex: 1 }}
         initialRegion={{

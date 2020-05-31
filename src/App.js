@@ -1,11 +1,15 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
+import { AuthProvider } from './contexts/auth'
+import Routes from './routes';
 
 export default function App() {
   return (
-    <View>
-        <Text> Olá app </Text>
-    </View>
+    <NavigationContainer>
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
+    </NavigationContainer>
   );
 }

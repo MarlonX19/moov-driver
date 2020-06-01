@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Dashboard from '../screens/dashboard';
 import Profile from '../screens/profile';
+import Home from '../screens/home/Home'
 
 import DrawerContent from '../components/DrawerContent';
 
@@ -13,7 +14,7 @@ const AppStack = createDrawerNavigator();
 const AppRoutes = () => (
   <AppStack.Navigator
     drawerContent={DrawerContent}
-    initialRouteName="Dashboard"
+    initialRouteName="Home"
     overlayColor='rgba(0,0,0,0.6)'
     drawerStyle={{
       backgroundColor: '#fff',
@@ -24,7 +25,7 @@ const AppRoutes = () => (
       itemStyle: { marginVertical: 10 },
     }}
   >
-    <AppStack.Screen name="Dashboard" component={Dashboard} />
+    <AppStack.Screen name="Home" component={Home} />
     <AppStack.Screen name="Profile" component={Profile} />
   </AppStack.Navigator>
 )

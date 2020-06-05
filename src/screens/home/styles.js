@@ -26,7 +26,7 @@ export default styles = StyleSheet.create({
   },
 
   value: {
-    fontSize: 35,
+    fontSize: 24,
     fontWeight: 'bold'
   },
 

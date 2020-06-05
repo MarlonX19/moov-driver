@@ -14,6 +14,7 @@ export default function Home(props) {
   const [ref, setRef] = useState(true);
   const [newDel, setNewDel] = useState(false);
   const [socket, setSocket] = useState(null);
+  const [clientData, setClientData] = useState(null);
 
   const fadeIn = () => {
     // Will change fadeAnim value to 1 in 5 seconds
@@ -44,12 +45,15 @@ export default function Home(props) {
   useEffect(() => {
     if (socket) {
       socket.on('connected', (data, name) => {
-        alert('conectou motorista aqui')
+        //alert('conectou motorista aqui')
 
       })
 
-      socket.on('hello', () => {
+      socket.on('hello', (data) => {
+        console.log('data aqui')
+        console.log(data)
         setNewDel(true)
+        setClientData(data)
       })
 
     }
@@ -75,7 +79,7 @@ export default function Home(props) {
         showsMyLocationButton={false}
         showsCompass={false}
       />
-      {false ? <Animated.View style={[styles.cardView, {
+      {ref ? <Animated.View style={[styles.cardView, {
         opacity: fadeAnim, // Bind opacity to animated value
         bottom: btm
       }]}>
@@ -116,9 +120,11 @@ export default function Home(props) {
         <View>
           <Text style={styles.welcomeText}>Pedido de entrega!</Text>
         </View>
+        <Image source={{ uri: `http://192.168.15.13:3000/files/${clientData?.avatar_path}` }} style={{ width: 70, height: 70, borderRadius: 30, borderWidth: 0.5, borderColor: 'purple' }} />
+        <Text style={{ fontSize: 18, color: '#333'}}>{`${clientData?.first_name + ' ' + clientData?.last_name}`}</Text>
         <View style={styles.cardValue}>
           <Text style={styles.value}>R$150</Text>
-          <Icon name="money-bill-wave" size={50} color="lightgreen" />
+          <Icon name="money-bill-wave" size={32} color="lightgreen" />
         </View>
         <View style={{ width: '100%', paddingLeft: 30 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>

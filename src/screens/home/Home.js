@@ -10,7 +10,9 @@ import styles from './styles';
 
 export default function Home(props) {
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const fadeAnim2 = useRef(new Animated.Value(0)).current;
   const btm = useRef(new Animated.Value(-100)).current;
+  const btm2 = useRef(new Animated.Value(-100)).current;
   const [ref, setRef] = useState(true);
   const [newDel, setNewDel] = useState(false);
   const [socket, setSocket] = useState(null);
@@ -24,9 +26,25 @@ export default function Home(props) {
     }).start();
   };
 
+  const fadeIn2 = () => {
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(fadeAnim2, {
+      toValue: 1,
+      duration: 1000
+    }).start();
+  };
+
   const goUp = () => {
     // Will change fadeAnim value to 1 in 5 seconds
     Animated.timing(btm, {
+      toValue: 20,
+      duration: 1800
+    }).start();
+  };
+
+  const goUp2 = () => {
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(btm2, {
       toValue: 20,
       duration: 1800
     }).start();
@@ -61,6 +79,13 @@ export default function Home(props) {
 
   }, [socket])
 
+  useEffect(()=>{
+    if(newDel){
+      fadeIn2()
+      goUp2()
+    }
+
+  }, [newDel])
 
 
   return (
@@ -108,8 +133,8 @@ export default function Home(props) {
       </Animated.View> : <View />}
 
       {newDel ? <Animated.View style={[styles.newDeliveryCard, {
-        opacity: fadeAnim, // Bind opacity to animated value
-        bottom: btm
+        opacity: fadeAnim2, // Bind opacity to animated value
+        bottom: btm2
       }]}>
         <TouchableOpacity
           onPress={() => setNewDel(false)}

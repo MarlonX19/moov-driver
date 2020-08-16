@@ -11,6 +11,7 @@ import DrawerContent from './components/DrawerContent';
 const Drawer = createDrawerNavigator();
 
 export default function Routes() {
+    console.disableYellowBox = true;
     return (
         <NavigationContainer>
             <Drawer.Navigator

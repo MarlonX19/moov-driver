@@ -1,9 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import * as auth from '../services/auth';
-
 
 const AuthContext = createContext({ signed: false, user: {} });
+
+
+import { api } from '../services/auth';
 
 
 export const AuthProvider = ({ children }) => {
@@ -28,12 +29,25 @@ export const AuthProvider = ({ children }) => {
     loadStorageData();
   }, [])
 
-  async function signIn() {
-    const response = await auth.Signin();
-    setUser(response.user);
+  async function signIn(email, password) {
 
-    await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(response.user));
-    await AsyncStorage.setItem('@RNAuth:token', response.token);
+    return api.post("/driverlogin", { email, password })
+      .then(async response => {
+        try {
+          await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(response.data[0]));
+          await AsyncStorage.setItem('@RNAuth:token', response.data[0].push_id);
+        } catch (error) {
+          console.log(error);
+          return { message: 'failed' }
+        }
+        setUser(response.data[0]);
+        return { message: 'logged' }
+      })
+      .catch((error) => {
+        console.log(error);
+
+        return { message: 'failed' }
+      });
   }
 
   function signOut() {

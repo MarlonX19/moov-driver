@@ -1,13 +1,7 @@
-export function Signin(){
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve({
-        token: 'disaufhdsifhwsifhensoedsiodfsiofdeged',
-        user: {
-          name: 'Marlon Bennet',
-          email: 'marlon.bennet@gmail.com'
-        }
-      })
-    }, 1000);
-  })
-}
+import axios from 'axios';
+
+
+export const api = axios.create({
+  baseURL: 'http://192.168.15.13:3000/'
+});
+

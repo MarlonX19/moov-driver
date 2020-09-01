@@ -12,8 +12,11 @@ export default function Login(props) {
   const [pass, setPass] = useState('');
   const { signed, signIn } = useContext(AuthContext);
 
-  function handleLogin() {
-    signIn();
+  async function handleLogin() {
+    const res = await signIn(email, pass);
+
+    console.log('====resultado do sign in aqui=====')
+    console.log(res);
   }
 
 

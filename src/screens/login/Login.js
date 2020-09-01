@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StatusBar, TextInput, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { showMessage } from "react-native-flash-message";
 
 
 import AuthContext from '../../contexts/auth'
@@ -15,8 +16,12 @@ export default function Login(props) {
   async function handleLogin() {
     const res = await signIn(email, pass);
 
-    console.log('====resultado do sign in aqui=====')
-    console.log(res);
+    if(res.message === 'failed') {
+      showMessage({
+        message: "Falha ao tentar logar!",
+        type: "danger",
+      });
+    }
   }
 
 

@@ -5,15 +5,34 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Dashboard from '../screens/dashboard';
 import Profile from '../screens/profile';
 import Home from '../screens/home/Home'
+import Update from '../screens/update';
 
 import DrawerContent from '../components/DrawerContent';
 import CustomDrawerContent from '../components/CustomDrawerContent';
 
-//const AppStack = createStackNavigator();
-const AppStack = createDrawerNavigator();
+const AppStack = createStackNavigator();
+
+function ProfileRoot() {
+  return (
+    <AppStack.Navigator>
+      <AppStack.Screen
+        options={{ headerShown: false }}
+        name="Profile"
+        component={Profile} />
+      <AppStack.Screen
+        options={{ headerShown: false }}
+        name="Update"
+        component={Update} />
+    </AppStack.Navigator>
+  );
+}
+
+
+
+const AppDrawer = createDrawerNavigator();
 
 const AppRoutes = () => (
-  <AppStack.Navigator
+  <AppDrawer.Navigator
     //drawerContent={DrawerContent}
     drawerContent={(props) => <CustomDrawerContent {...props} />}
     initialRouteName="Home"
@@ -27,9 +46,9 @@ const AppRoutes = () => (
       itemStyle: { marginVertical: 10 },
     }}
   >
-    <AppStack.Screen name="Home" component={Home} />
-    <AppStack.Screen name="Profile" component={Profile} />
-  </AppStack.Navigator>
+    <AppDrawer.Screen name="Home" component={Home} />
+    <AppDrawer.Screen name="Profile" component={ProfileRoot} />
+  </AppDrawer.Navigator>
 )
 
 export default AppRoutes;

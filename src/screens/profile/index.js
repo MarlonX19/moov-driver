@@ -1,14 +1,20 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
-// import { Container } from './styles';
+import styles from './styles';
 
-const Index = () => {
+function Profile(props) {
   return (
-    <View>
-      <Text>olá mundo</Text>
+    <View style={styles.container}>
+      <Text>olá profile</Text>
+
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate('Update')}
+      >
+        <Text>ir para atualziar</Text>
+      </TouchableOpacity>
     </View>
   )
 }
 
-export default Index;
+export default Profile;

@@ -28,7 +28,7 @@ function CustomDrawerContent(props) {
             maxStars={5}
             rating={5}
             starSize={25}
-            fullStarColor={'#FA960F'}
+            fullStarColor={'#95ed9e'}
             selectedStar={(rating) => { }}
           />
         </View>

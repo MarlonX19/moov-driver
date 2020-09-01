@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StatusBar, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StatusBar, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { showMessage } from "react-native-flash-message";
 
@@ -11,12 +11,12 @@ import styles from './styles';
 export default function Login(props) {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
-  const { signed, signIn } = useContext(AuthContext);
+  const { loading, signIn } = useContext(AuthContext);
 
   async function handleLogin() {
     const res = await signIn(email, pass);
 
-    if(res.message === 'failed') {
+    if (res.message === 'failed') {
       showMessage({
         message: "Falha ao tentar logar!",
         type: "danger",
@@ -56,12 +56,16 @@ export default function Login(props) {
           value={pass}
           style={styles.input}
         />
-        <TouchableOpacity
-          onPress={() => handleLogin()}
-          style={styles.btn}
-        >
-          <Text style={styles.btnText}>ENTRAR</Text>
-        </TouchableOpacity>
+        {
+          loading ?
+            <ActivityIndicator color='black' size='large' /> :
+            <TouchableOpacity
+              onPress={() => handleLogin()}
+              style={styles.btn}
+            >
+              <Text style={styles.btnText}>ENTRAR</Text>
+            </TouchableOpacity>
+        }
         <TouchableOpacity
           onPress={() => false}
         >

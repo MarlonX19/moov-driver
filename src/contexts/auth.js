@@ -9,7 +9,7 @@ import { api } from '../services/auth';
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
 
   useEffect(() => {
@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   async function signIn(email, password) {
+    setLoading(true);
 
     return api.post("/driverlogin", { email, password })
       .then(async response => {
@@ -40,12 +41,13 @@ export const AuthProvider = ({ children }) => {
           console.log(error);
           return { message: 'failed' }
         }
+        setLoading(false);
         setUser(response.data[0]);
         return { message: 'logged' }
       })
       .catch((error) => {
         console.log(error);
-
+        setLoading(false);
         return { message: 'failed' }
       });
   }

@@ -7,13 +7,15 @@ import Profile from '../screens/profile';
 import Home from '../screens/home/Home'
 
 import DrawerContent from '../components/DrawerContent';
+import CustomDrawerContent from '../components/CustomDrawerContent';
 
 //const AppStack = createStackNavigator();
 const AppStack = createDrawerNavigator();
 
 const AppRoutes = () => (
   <AppStack.Navigator
-    drawerContent={DrawerContent}
+    //drawerContent={DrawerContent}
+    drawerContent={(props) => <CustomDrawerContent {...props} />}
     initialRouteName="Home"
     overlayColor='rgba(0,0,0,0.6)'
     drawerStyle={{

@@ -6,6 +6,7 @@ import Dashboard from '../screens/dashboard';
 import Profile from '../screens/profile';
 import Home from '../screens/home/Home'
 import Update from '../screens/update';
+import Help from '../screens/help';
 
 import DrawerContent from '../components/DrawerContent';
 import CustomDrawerContent from '../components/CustomDrawerContent';
@@ -48,6 +49,7 @@ const AppRoutes = () => (
   >
     <AppDrawer.Screen name="Home" component={Home} />
     <AppDrawer.Screen name="Profile" component={ProfileRoot} />
+    <AppDrawer.Screen name="Ajuda" component={Help} />
   </AppDrawer.Navigator>
 )
 

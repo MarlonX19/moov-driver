@@ -5,6 +5,7 @@ import Update from '../screens/update';
 import Help from '../screens/help';
 import Register from '../screens/register';
 import Login from '../screens/login/Login';
+import ForgotPass from '../screens/forgotpass';
 
 
 const screens = {
@@ -15,6 +16,7 @@ const screens = {
   Help,
   Register,
   Login,
+  ForgotPass,
 }
 
 

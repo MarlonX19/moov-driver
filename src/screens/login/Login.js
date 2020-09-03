@@ -29,6 +29,10 @@ export default function Login(props) {
     props.navigation.navigate('Register')
   }
 
+  function handleForgotPass() {
+    props.navigation.navigate('ForgotPass')
+  }
+
 
   return (
     <LinearGradient
@@ -72,7 +76,7 @@ export default function Login(props) {
             </TouchableOpacity>
         }
         <TouchableOpacity
-          onPress={() => false}
+          onPress={() => handleForgotPass()}
         >
           <Text style={styles.forgotPass}>ESQUECEU SENHA</Text>
         </TouchableOpacity>

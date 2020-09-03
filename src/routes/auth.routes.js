@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Screens from '../screens';
-const { Login, Register, ForgotPass } = Screens;
+const { Login, Register, ForgotPass, ResetPass } = Screens;
 
 const AuthStack = createStackNavigator();
 
@@ -27,6 +27,17 @@ const AuthRoutes = () => (
       },
       headerTintColor: '#fff',
     }} name="ForgotPass" component={ForgotPass} />
+    <AuthStack.Screen options={{
+      title: 'Redefinir senha',
+      headerShown: true,
+      headerStyle: {
+        backgroundColor: '#A8F9BA',
+        elevation: 0,
+        shadowOpacity: 0,
+        borderBottomWidth: 0,
+      },
+      headerTintColor: '#fff',
+    }} name="ResetPass" component={ResetPass} />
   </AuthStack.Navigator>
 )
 

@@ -6,6 +6,7 @@ import Help from '../screens/help';
 import Register from '../screens/register';
 import Login from '../screens/login/Login';
 import ForgotPass from '../screens/forgotpass';
+import ResetPass from '../screens/resetpass';
 
 
 const screens = {
@@ -17,6 +18,7 @@ const screens = {
   Register,
   Login,
   ForgotPass,
+  ResetPass,
 }
 
 

@@ -9,47 +9,56 @@ import { api } from '../../services/auth';
 import styles from './styles';
 
 function Index(props) {
-  const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const type = 'drivers';
 
-  async function handleSendToken() {
-    const res = await api.post('/checkEmail', { email, type })
-    const { messageCode } = res.data;
+  async function handleResetPass() {
 
-    if (messageCode !== '404') {
-      showMessage({
-        message: "Email não encontrado",
-        type: "info",
-      });
-      return;
-    } 
-    props.navigation.navigate('ResetPass')
 
   }
 
   return (
     <LinearBackground>
       <View style={styles.topView}>
-        <Text style={styles.topText}>Esqueceu a senha? Não tem problema, a gente ajuda</Text>
+        <Text style={styles.topText}>Recupere sua conta!</Text>
         <Text style={[styles.topText, { fontSize: 14 }]}>Enviaremos um código no seu email</Text>
       </View>
       <View style={styles.inputView}>
         <TextInput
-          placeholder='EMAIL'
+          placeholder='Código'
           placeholderTextColor='#7B6F6F'
           autoCorrect={false}
           autoCapitalize='none'
           onChangeText={text => setEmail(text)}
-          value={email}
+          value={code}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder='Senha'
+          placeholderTextColor='#7B6F6F'
+          autoCorrect={false}
+          autoCapitalize='none'
+          onChangeText={text => setEmail(text)}
+          value={password}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder='Confirme a senha'
+          placeholderTextColor='#7B6F6F'
+          autoCorrect={false}
+          autoCapitalize='none'
+          onChangeText={text => setEmail(text)}
+          value={confirmPassword}
           style={styles.input}
         />
         <TouchableOpacity
-          onPress={() => handleSendToken()}
+          onPress={() => handleResetPass()}
           style={styles.btn}
-          disabled={email.length < 1}
         >
-          <Text style={styles.btnText}>Enviar código</Text>
+          <Text style={styles.btnText}>Redefinir senha</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.bottomView}>

@@ -25,6 +25,11 @@ export default function Login(props) {
   }
 
 
+  function handleCreateAccount() {
+    props.navigation.navigate('Register')
+  }
+
+
   return (
     <LinearGradient
       start={{ x: 0, y: 0 }}
@@ -75,7 +80,7 @@ export default function Login(props) {
 
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <TouchableOpacity
-          onPress={() => false}
+          onPress={() => handleCreateAccount()}
           style={styles.bottomBtn}
         >
           <Text style={styles.bottomText1}>NÃO TEM CONTA? <Text style={styles.bottomText2}>CRIE UMA</Text></Text>

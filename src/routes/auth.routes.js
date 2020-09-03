@@ -1,31 +1,24 @@
 import React from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import Login from '../screens/login/Login';
+import Screens from '../screens';
+const { Login, Register } = Screens;
 
 
 import DrawerContent from '../components/DrawerContent';
 
 
-//const AuthStack = createStackNavigator();
-const AuthStack = createDrawerNavigator();
+const AuthStack = createStackNavigator();
 
 const AuthRoutes = () => (
-       <AuthStack.Navigator
-        drawerContent={DrawerContent}
-        initialRouteName="Login"
-        overlayColor='rgba(0,0,0,0.6)'
-        drawerStyle={{
-          backgroundColor: '#fff',
-          width: 280,
-        }}
-        drawerContentOptions={{
-          activeTintColor: '#e91e63',
-          itemStyle: { marginVertical: 10 },
-        }}
-      >
-        <AuthStack.Screen name="Login" component={Login} />
-      </AuthStack.Navigator>
+  <AuthStack.Navigator
+    screenOptions={{
+      headerShown: false
+    }}
+  >
+    <AuthStack.Screen name="Login" component={Login} />
+    <AuthStack.Screen name="Register" component={Register} />
+  </AuthStack.Navigator>
 )
 
 export default AuthRoutes;

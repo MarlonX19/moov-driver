@@ -1,13 +1,17 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 
-function Index(props){
+import LinearBackground from '../../components/linearBackground';
+
+
+function Index(props) {
 
   return (
-    <View>
+    <LinearBackground>
       <Text>Olá forgot</Text>
-    </View>
+
+    </LinearBackground>
   )
 }
 

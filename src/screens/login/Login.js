@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StatusBar, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { showMessage } from "react-native-flash-message";
+
+import LinearBackground from '../../components/linearBackground';
 
 
 import AuthContext from '../../contexts/auth'
@@ -35,12 +36,7 @@ export default function Login(props) {
 
 
   return (
-    <LinearGradient
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0, y: 1 }}
-      colors={['#A8F9BA', '#FA9EAF']}
-      style={styles.container}
-    >
+    <LinearBackground>
       <StatusBar barStyle='light-content' backgroundColor='#A8F9BA' />
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={styles.title}>Moov</Text>
@@ -90,6 +86,6 @@ export default function Login(props) {
           <Text style={styles.bottomText1}>NÃO TEM CONTA? <Text style={styles.bottomText2}>CRIE UMA</Text></Text>
         </TouchableOpacity>
       </View>
-    </LinearGradient>
+    </LinearBackground>
   );
 }

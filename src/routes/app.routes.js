@@ -2,13 +2,11 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import Dashboard from '../screens/dashboard';
-import Profile from '../screens/profile';
-import Home from '../screens/home/Home'
-import Update from '../screens/update';
-import Help from '../screens/help';
+import Screens from '../screens';
+const { Dashboard, Profile, Home,
+  Update, Help, } = Screens;
 
-import DrawerContent from '../components/DrawerContent';
+
 import CustomDrawerContent from '../components/CustomDrawerContent';
 
 const AppStack = createStackNavigator();
@@ -43,7 +41,7 @@ const AppRoutes = () => (
       width: 280,
     }}
     drawerContentOptions={{
-      activeTintColor: '#e91e63',
+      activeTintColor: '#95ed9e',
       itemStyle: { marginVertical: 10 },
     }}
   >

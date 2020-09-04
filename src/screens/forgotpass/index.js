@@ -10,21 +10,39 @@ import styles from './styles';
 
 function Index(props) {
   const [email, setEmail] = useState('');
+  const [emailChecked, setEmailChecked] = useState(false);
 
   const type = 'drivers';
 
-  async function handleSendToken() {
+  async function handleCheckEmail() {
     const res = await api.post('/checkEmail', { email, type })
     const { messageCode } = res.data;
 
-    if (messageCode !== '404') {
+    if (messageCode == '404') {
       showMessage({
         message: "Email não encontrado",
         type: "info",
       });
+      setEmailChecked(false);
       return;
-    } 
-    props.navigation.navigate('ResetPass')
+    }
+    setEmailChecked(true);
+
+  }
+
+
+  async function handleSendToken() {
+    const res = await api.post('/forgot', { email, type })
+
+    console.log(res.data);
+    if (res?.data?.messageCode == '201') {
+      props.navigation.navigate('ResetPass')
+    } else {
+      showMessage({
+        message: "Erro ao enviar código ao e-mail",
+        type: "warning",
+      });
+    }
 
   }
 
@@ -43,10 +61,11 @@ function Index(props) {
           onChangeText={text => setEmail(text)}
           value={email}
           style={styles.input}
+          onBlur={() => handleCheckEmail()}
         />
         <TouchableOpacity
           onPress={() => handleSendToken()}
-          style={styles.btn}
+          style={[styles.btn, { backgroundColor: emailChecked ? '#000000' : '#999' }]}
           disabled={email.length < 1}
         >
           <Text style={styles.btnText}>Enviar código</Text>

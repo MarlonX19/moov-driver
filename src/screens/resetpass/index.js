@@ -24,7 +24,7 @@ function Index(props) {
     <LinearBackground>
       <View style={styles.topView}>
         <Text style={styles.topText}>Recupere sua conta!</Text>
-        <Text style={[styles.topText, { fontSize: 14 }]}>Enviaremos um código no seu email</Text>
+        <Text style={[styles.topText, { fontSize: 14 }]}>Verifique seu e-mail, enviamos um código lá</Text>
       </View>
       <View style={styles.inputView}>
         <TextInput
@@ -37,7 +37,7 @@ function Index(props) {
           style={styles.input}
         />
         <TextInput
-          placeholder='Senha'
+          placeholder='Nova senha'
           placeholderTextColor='#7B6F6F'
           autoCorrect={false}
           autoCapitalize='none'

@@ -45,6 +45,12 @@ const styles = StyleSheet.create({
 
   bottomView: {
     flex: 1,
+  },
+
+  checkPass: {
+    fontSize: 15,
+    color: 'red',
+    marginVertical: 5,
   }
 
 })

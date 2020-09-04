@@ -36,7 +36,7 @@ function Index(props) {
 
     console.log(res.data);
     if (res?.data?.messageCode == '201') {
-      props.navigation.navigate('ResetPass')
+      props.navigation.navigate('ResetPass', { email })
     } else {
       showMessage({
         message: "Erro ao enviar código ao e-mail",

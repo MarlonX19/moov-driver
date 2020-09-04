@@ -66,7 +66,7 @@ function Index(props) {
         <TouchableOpacity
           onPress={() => handleSendToken()}
           style={[styles.btn, { backgroundColor: emailChecked ? '#000000' : '#999' }]}
-          disabled={email.length < 1}
+          disabled={email.length < 1 || !emailChecked}
         >
           <Text style={styles.btnText}>Enviar código</Text>
         </TouchableOpacity>

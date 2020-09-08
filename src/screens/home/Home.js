@@ -81,10 +81,21 @@ export default function Home(props) {
         setClientData(data)
       })
 
+      socket.on('accepted', (data) => {
+        console.log('foi aceito hehe')
+        console.log(data)
+        setNewDel(false);
+      })
+
     }
 
 
   }, [socket])
+
+
+  function handleAcceptedRequest() {
+    socket.emit('accepted', {})
+  }
 
   useEffect(() => {
     if (newDel) {
@@ -95,30 +106,30 @@ export default function Home(props) {
   }, [newDel])
 
 
-  async function handleAccept(){
-    const response  = await api.post('/delivery' , {
+  async function handleAccept() {
+    const response = await api.post('/delivery', {
       accepted: true,
       delivered: false,
       value: clientData?.value,
       observation: clientData.observation,
       fromLatitude: clientData.fromLatitude,
-      fromLongitude: clientData.fromLongitude, 
+      fromLongitude: clientData.fromLongitude,
       toLatitude: clientData.toLatitude,
       toLongitude: clientData.toLongitude,
       fromTown: clientData.fromTown,
       toTown: clientData.toTown,
       delivered_at: null,
       date: clientData.date,
-      driver_id: 1,
+      driver_id: user.id,
       user_id: clientData.user.id,
     })
 
-    if(response?.data?.messageCode === '200') {
+    if (response?.data?.messageCode === '200') {
       showMessage({
         message: "Parabéns, agora basta entregar!",
         type: "success",
       });
-      setNewDel(false)
+      handleAcceptedRequest()
     } else {
       showMessage({
         message: "Entrega não mais disponível",
@@ -178,7 +189,7 @@ export default function Home(props) {
         bottom: btm2
       }]}>
         <TouchableOpacity
-          onPress={() => setNewDel(false)}
+          onPress={() => handleAcceptedRequest()}
           style={{ position: 'absolute', top: 10, left: 15 }}
         >
           <Icon name="times" size={25} color="#ddd" />
@@ -202,7 +213,7 @@ export default function Home(props) {
         </View>
         <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-around' }}>
           <TouchableOpacity
-            onPress={() => { }}
+            onPress={() => handleAcceptedRequest()}
             style={styles.denyBtn}
           >
             <Text style={styles.btnText}>NEGAR</Text>

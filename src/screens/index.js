@@ -7,6 +7,7 @@ import Register from '../screens/register';
 import Login from '../screens/login/Login';
 import ForgotPass from '../screens/forgotpass';
 import ResetPass from '../screens/resetpass';
+import History from '../screens/history';
 
 
 const screens = {
@@ -19,6 +20,7 @@ const screens = {
   Login,
   ForgotPass,
   ResetPass,
+  History,
 }
 
 

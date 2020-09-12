@@ -4,7 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Screens from '../screens';
 const { Dashboard, Profile, Home,
-  Update, Help, } = Screens;
+  Update, Help, History } = Screens;
 
 
 import CustomDrawerContent from '../components/CustomDrawerContent';
@@ -27,6 +27,23 @@ function ProfileRoot() {
 }
 
 
+function HistoryRoot() {
+  return (
+    <AppStack.Navigator>
+      <AppStack.Screen
+        options={{ headerShown: false }}
+        name="History"
+        component={History} />
+      <AppStack.Screen
+        options={{ headerShown: false }}
+        name="Update"
+        component={Update} />
+    </AppStack.Navigator>
+  );
+}
+
+
+
 
 const AppDrawer = createDrawerNavigator();
 
@@ -47,6 +64,7 @@ const AppRoutes = () => (
   >
     <AppDrawer.Screen name="Home" component={Home} />
     <AppDrawer.Screen name="Profile" component={ProfileRoot} />
+    <AppDrawer.Screen name="History" component={HistoryRoot} />
     <AppDrawer.Screen name="Ajuda" component={Help} />
   </AppDrawer.Navigator>
 )

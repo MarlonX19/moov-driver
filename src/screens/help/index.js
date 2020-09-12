@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-import Header from '../../components/Header';
+import MainHeader from '../../components/MainHeader';
 
 import AuthContext from '../../contexts/auth';
 
@@ -16,7 +16,7 @@ export default function Help(props) {
 
   return (
     <View style={styles.container}>
-      <Header head='Ajuda' navigation={props.navigation} />
+      <MainHeader head='Ajuda' navigation={props.navigation} />
       <View style={styles.mainView}>
 
       </View>

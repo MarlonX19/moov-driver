@@ -1,11 +1,12 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
-import { View, Text, Animated, TouchableOpacity, Image } from 'react-native';
+import { View, Text, Animated, PermissionsAndroid, TouchableOpacity, Image } from 'react-native';
 import { showMessage } from "react-native-flash-message";
+import Geolocation from 'react-native-geolocation-service';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import io from 'socket.io-client';
 
-import Header from '../../components/Header';
+import MainHeader from '../../components/MainHeader';
 
 import AuthContext from '../../contexts/auth';
 
@@ -18,12 +19,35 @@ export default function Home(props) {
   const fadeAnim2 = useRef(new Animated.Value(0)).current;
   const btm = useRef(new Animated.Value(-100)).current;
   const btm2 = useRef(new Animated.Value(-100)).current;
+  const [location, setLocation] = useState({});
   const [ref, setRef] = useState(true);
   const [newDel, setNewDel] = useState(false);
   const [socket, setSocket] = useState(null);
   const [clientData, setClientData] = useState(null);
 
+  let markerLat = useRef(-22.376422).current;
+  let markerLong = useRef(-47.3722709).current;
+
   const { user } = useContext(AuthContext);
+
+
+  const handleMarkerLat = (value) => {
+    //
+    Animated.timing(markerLat, {
+      toValue: value,
+      duration: 1000
+    }).start();
+  };
+
+  const handleMarkerLong = (value) => {
+    //
+    Animated.timing(markerLong, {
+      toValue: value,
+      duration: 1000
+    }).start();
+  };
+
+
 
   const fadeIn = () => {
     // Will change fadeAnim value to 1 in 5 seconds
@@ -57,18 +81,97 @@ export default function Home(props) {
     }).start();
   };
 
-  useEffect(() => {
-    fadeIn()
-    goUp()
+  async function getLocation() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Permissão de localização',
+          message: 'Necessário para funcionar',
+          buttonNeutral: 'Depois',
+          buttonNegative: 'Cancelar',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        Geolocation.getCurrentPosition(
+          ({ coords: { latitude, longitude } }) => {
+            setLocation({ 'latitude': latitude, 'longitude': longitude })
+            console.log(latitude, longitude)
+          },
+          (error) => {
+            console.log(error.code, error.message);
+          },
+          { enableHighAccuracy: true, timeout: 5000, maximumAge: 10000 }
+        );
 
+      } else {
+        console.log('Fine Location permission denied');
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+
+  async function watchDriverPosition() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Permissão para acompnhar localização',
+          message: 'Necessário para funcionar',
+          buttonNeutral: 'Depois',
+          buttonNegative: 'Cancelar',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        Geolocation.watchPosition(
+          ({ coords }) => {
+            console.log('===========aqui assistindo position=========')
+            console.log(coords)
+            socket.emit('watchedPosition', { coords })
+
+          },
+          (error) => {
+            console.log('===========aqui ERRO assistindo position=========')
+            console.log(error.code, error.message);
+          },
+          { enableHighAccuracy: true, distanceFilter: 0.1, interval: 700 }
+        );
+
+      } else {
+        console.log('Fine Location permission denied');
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+
+  useEffect(() => {
     let skt = io('http://192.168.15.13:3000/motoristas')
     setSocket(skt);
 
+    getLocation();
+    fadeIn();
+    goUp();
+
+
+    return function cleanup() {
+      Geolocation.stopObserving();
+    };
 
   }, [])
 
   useEffect(() => {
     if (socket) {
+      
+      watchDriverPosition();
+
       socket.on('connected', (data, name) => {
         //alert('conectou motorista aqui')
 
@@ -85,6 +188,12 @@ export default function Home(props) {
         console.log('foi aceito hehe')
         console.log(data)
         setNewDel(false);
+      })
+
+      socket.on('watchedPosition', (data) => {
+        console.log('posição aqui hahahaha')
+        console.log(data)
+      
       })
 
     }
@@ -142,12 +251,12 @@ export default function Home(props) {
 
   return (
     <View style={styles.container}>
-      <Header navigation={props.navigation} />
+      <MainHeader navigation={props.navigation} />
       <MapView
         style={{ flex: 1 }}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: location.latitude ? location.latitude : -22.376422,
+          longitude: location.longitude ? location.longitude : -47.3722709,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }}
@@ -155,7 +264,17 @@ export default function Home(props) {
         loadingEnabled
         showsMyLocationButton={false}
         showsCompass={false}
-      />
+      >
+        <Marker
+          title='voce está aqui'
+          isPreselected
+          onPress={e => console.log(e.nativeEvent)}
+          draggable
+          coordinate={{ "latitude": markerLat, "longitude": markerLong }}
+
+        >
+        </Marker>
+      </MapView>
       {ref ? <Animated.View style={[styles.cardView, {
         opacity: fadeAnim, // Bind opacity to animated value
         bottom: btm
@@ -167,7 +286,7 @@ export default function Home(props) {
           <Icon name="times" size={25} color="#ddd" />
         </TouchableOpacity>
         <View>
-          <Text style={styles.welcomeText}>Olá, Marvin</Text>
+          <Text style={styles.welcomeText}>Olá, {user.first_name}</Text>
         </View>
         <View style={styles.cardValue}>
           <Text style={styles.value}>R$10</Text>

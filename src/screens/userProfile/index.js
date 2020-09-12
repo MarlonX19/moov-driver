@@ -1,14 +1,34 @@
-import React from 'react';
-import { View, Text, Image, Linking, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, Linking, TouchableOpacity, Modal, Alert, TouchableHighlight } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import StarRating from 'react-native-star-rating';
+import { showMessage } from "react-native-flash-message";
 
 import Header from '../../components/Header';
+
+import { api } from '../../services/auth';
 
 import styles from './styles';
 
 function UserProfile(props) {
-  const { userData } = props.route.params;
+  let { userData } = props.route.params;
+  const [modalVisible, setModalVisible] = useState(false);
+  const [number_starts, setNumberStarts] = useState(1);
+
+
+  async function handleRateUser() {
+    userData = { ...userData, number_starts }
+    const response = await api.put('/users', { userData })
+
+    if (response.data.messageCode === '200') {
+      showMessage({
+        message: "Avaliação dada com sucesso!",
+        type: "success",
+      });
+    }
+    setModalVisible(false);
+  }
+
 
   return (
     <View style={styles.container}>
@@ -23,7 +43,7 @@ function UserProfile(props) {
           <StarRating
             disabled={false}
             maxStars={5}
-            rating={4}
+            rating={userData.number_starts}
             starSize={18}
             fullStarColor={'#FA960F'}
             selectedStar={(rating) => { }}
@@ -49,7 +69,7 @@ function UserProfile(props) {
             </>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => Linking.openURL(`tel:${userData.phone}`)}
+            onPress={() => setModalVisible(true)}
             style={styles.callButton}
           >
             <>
@@ -59,6 +79,42 @@ function UserProfile(props) {
           </TouchableOpacity>
         </View>
       </View>
+
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        style={{ backgroundColor: 'red', flex: 1 }}
+        onRequestClose={() => {
+          console.log("Modal has been closed.");
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.rateView}>
+              <Text style={styles.modalText}>Avalie o seu cliente</Text>
+              <StarRating
+                disabled={false}
+                maxStars={5}
+                rating={number_starts}
+                starSize={40}
+                fullStarColor={'#FA960F'}
+                selectedStar={(rating) => setNumberStarts(rating)}
+              />
+            </View>
+            <TouchableHighlight
+              style={{ ...styles.openButton }}
+              onPress={() => {
+                handleRateUser();
+              }}
+            >
+              <Text style={styles.textStyle}>Avaliar</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
+
     </View>
   )
 }

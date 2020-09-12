@@ -34,15 +34,17 @@ export const AuthProvider = ({ children }) => {
 
     return api.post("/driverlogin", { email, password })
       .then(async response => {
+        console.log(response.data)
         try {
-          await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(response.data[0]));
-          await AsyncStorage.setItem('@RNAuth:token', response.data[0].push_id);
+          await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(response.data.response[0]));
+          await AsyncStorage.setItem('@RNAuth:token', response.data.response[0].push_id);
         } catch (error) {
           console.log(error);
+          setLoading(false);
           return { message: 'failed' }
         }
         setLoading(false);
-        setUser(response.data[0]);
+        setUser(response.data.response[0]);
         return { message: 'logged' }
       })
       .catch((error) => {
@@ -58,12 +60,40 @@ export const AuthProvider = ({ children }) => {
     })
   }
 
+  async function updateUser(userData) {
+    return api.put("/drivers", { userData })
+      .then(async response => {
+        console.log('========response da atualização aqui=======')
+        console.log(response.data.response[0])
+        try {
+          await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(response.data.response[0]));
+          await AsyncStorage.setItem('@RNAuth:token', response.data.response[0].push_id);
+        } catch (error) {
+          console.log(error);
+        }
+        setUser(response.data.response[0]);
+        return { message: 'updated' }
+      })
+      .catch((error) => {
+        console.log(error);
+        return { message: 'error' }
+      });
+  }
+
   function sayHi() {
     alert('ola')
   }
 
   return (
-    <AuthContext.Provider value={{ signed: !!user, user, signIn, signOut, loading, sayHi }} >
+    <AuthContext.Provider value={{
+      signed: !!user,
+      user,
+      signIn,
+      signOut,
+      loading,
+      sayHi,
+      updateUser
+    }} >
       {children}
     </AuthContext.Provider>
   )

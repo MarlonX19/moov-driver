@@ -4,7 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Screens from '../screens';
 const { Dashboard, Profile, Home,
-  Update, Help, History, Request } = Screens;
+  Update, Help, History, Request, UserProfile } = Screens;
 
 
 import CustomDrawerContent from '../components/CustomDrawerContent';
@@ -38,6 +38,10 @@ function HistoryRoot() {
         options={{ headerShown: false }}
         name="Detalhes"
         component={Request} />
+      <AppStack.Screen
+        options={{ headerShown: false }}
+        name="UserProfile"
+        component={UserProfile} />
     </AppStack.Navigator>
   );
 }

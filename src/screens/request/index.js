@@ -41,8 +41,8 @@ function Request(props) {
     loadClientInfo()
   }, [])
 
-  function handleSeeDriverProfile() {
-    props.navigation.navigate('PerfilMotorista', { driverData });
+  function handleSeeUserProfile() {
+    props.navigation.navigate('UserProfile', { userData });
 
   }
 
@@ -121,7 +121,7 @@ function Request(props) {
             <Text style={[styles.driverText, { fontSize: 18 }]}>{`${userData.first_name} ${userData.last_name}`}</Text>
           </View>
           <TouchableOpacity
-            onPress={() => handleSeeDriverProfile()}
+            onPress={() => handleSeeUserProfile()}
           >
             <View style={styles.driverInnerView}>
               <Text style={[styles.driverText, { color: '#FA960F' }]}>Ver perfil</Text>

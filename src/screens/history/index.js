@@ -28,7 +28,7 @@ function index (props) {
     const response = await api.post('/user/deliveries', { user_id, type })
 
     if (response.data.messageCode == '200') {
-      console.log(response.data.response)
+    
       setDeliveries(response.data.response);
       setLoading(false);
     } else {
@@ -60,8 +60,6 @@ function index (props) {
 
 
   const renderItem = ({ item }) => {
-    console.log('item aqui');
-    console.log(item)
     return (
       <TouchableOpacity
         onPress={() => handleSeeDetails(item)}

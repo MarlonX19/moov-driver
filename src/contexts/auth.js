@@ -60,11 +60,9 @@ export const AuthProvider = ({ children }) => {
     })
   }
 
-  async function updateUser(userData) {
-    return api.put("/drivers", { userData })
+  async function updateUser(driverData) {
+    return api.put("/drivers", { driverData })
       .then(async response => {
-        console.log('========response da atualização aqui=======')
-        console.log(response.data.response[0])
         try {
           await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(response.data.response[0]));
           await AsyncStorage.setItem('@RNAuth:token', response.data.response[0].push_id);

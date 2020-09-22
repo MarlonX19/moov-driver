@@ -32,6 +32,11 @@ export default function Home(props) {
 
   const { user } = useContext(AuthContext);
 
+  useEffect(()=>{
+    console.log('aqui');
+    console.log(clientData)
+  }, [clientData])
+
 
   const handleMarkerLat = (value) => {
     //
@@ -155,7 +160,7 @@ export default function Home(props) {
 
 
   useEffect(() => {
-    let skt = io('http://192.168.15.13:3000/motoristas')
+    let skt = io('https://moov-back-end.herokuapp.com/motoristas')
     setSocket(skt);
 
     getLocation();
@@ -318,7 +323,7 @@ export default function Home(props) {
         <View>
           <Text style={styles.welcomeText}>Pedido de entrega!</Text>
         </View>
-        <Image source={{ uri: `http://192.168.15.13:3000/files/${clientData?.user?.avatar_path}` }} style={{ width: 70, height: 70, borderRadius: 30, borderWidth: 0.5, borderColor: 'purple' }} />
+        <Image source={{ uri: `${BASE_URL}/files/${clientData?.user?.avatar_path}` }} style={{ width: 70, height: 70, borderRadius: 30, borderWidth: 0.5, borderColor: 'purple' }} />
         <Text style={{ fontSize: 18, color: '#333' }}>{`${clientData?.user?.first_name + ' ' + clientData?.user?.last_name}`}</Text>
         <View style={styles.cardValue}>
           <Text style={styles.value}>R${clientData?.value}</Text>

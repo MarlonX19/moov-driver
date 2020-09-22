@@ -30,7 +30,9 @@ function index (props) {
     console.log(response)
 
     if (response.data.messageCode == '200') {
-    
+      response.data.response.sort(function(a,b){
+        return new Date(b.date) - new Date(a.date);
+      });
       setDeliveries(response.data.response);
       setLoading(false);
     } else {

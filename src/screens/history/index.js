@@ -27,6 +27,8 @@ function index (props) {
     let type = 'drivers';
     const response = await api.post('/user/deliveries', { user_id, type })
 
+    console.log(response)
+
     if (response.data.messageCode == '200') {
     
       setDeliveries(response.data.response);

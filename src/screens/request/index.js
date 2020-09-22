@@ -5,7 +5,7 @@ import Geolocation from 'react-native-geolocation-service';
 import MapViewDirections from 'react-native-maps-directions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // import { GOOGLE_PLACES_API_KEY } from '@env';
-import { GOOGLE_PLACES_API_KEY } from '../../../constants';
+import { GOOGLE_PLACES_API_KEY, BASE_URL } from '../../../constants';
 import moment from 'moment';
 
 
@@ -117,7 +117,7 @@ function Request(props) {
         </View>
         <View style={styles.driverView}>
           <View style={styles.driverInnerView}>
-            <Image source={{ uri: `http://192.168.15.13:3000/files/${userData.avatar_path}` }} style={{ width: 85, height: 85, borderRadius: 50 }} />
+            <Image source={{ uri: `${BASE_URL}/files/${userData.avatar_path}` }} style={{ width: 85, height: 85, borderRadius: 50 }} />
             <Text style={[styles.driverText, { fontSize: 18 }]}>{`${userData.first_name} ${userData.last_name}`}</Text>
           </View>
           <TouchableOpacity

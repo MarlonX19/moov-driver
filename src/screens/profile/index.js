@@ -4,6 +4,8 @@ import { showMessage } from "react-native-flash-message";
 
 import { phoneMask } from '../../utils/inputMasks';
 
+import { BASE_URL } from '../../../constants';
+
 import Header from '../../components/Header'
 import styles from './styles';
 
@@ -21,12 +23,12 @@ export default function Profile(props) {
     if (user?.first_name && user?.last_name) {
       setName(user.first_name)
       setLastName(user.last_name)
-      setAvatar(`http://192.168.15.13:3000/files/${user.avatar_path}`)
+      setAvatar(`${BASE_URL}/files/${user.avatar_path}`)
     }
   }, [])
 
   useEffect(() => {
-    setAvatar(`http://192.168.15.13:3000/files/${user.avatar_path}`)
+    setAvatar(`${BASE_URL}/files/${user.avatar_path}`)
 
   }, [user.avatar_path])
 
@@ -57,7 +59,7 @@ export default function Profile(props) {
         <View style={styles.topCard}>
           <View >
             <TouchableOpacity
-              onPress={() => props.navigation.navigate('Atualizar', { forUpdate: 'image' })}
+              onPress={() => props.navigation.navigate('Update', { forUpdate: 'image' })}
               style={styles.imageView}
             >
               <Image source={{ uri: avatar }} style={{ borderRadius: 15, width: 90, height: 90 }} />

@@ -6,6 +6,8 @@ import { showMessage } from "react-native-flash-message";
 
 import Header from '../../components/Header';
 
+import { BASE_URL } from '../../../constants';
+
 import { api } from '../../services/auth';
 
 import styles from './styles';
@@ -35,10 +37,10 @@ function UserProfile(props) {
       <Header head='Perfil do usuário' navigation={props.navigation} />
       <View style={styles.topView}>
         <View style={{ width: '100%', height: 200 }}>
-          <Image source={{ uri: `http://192.168.15.13:3000/files/${userData.avatar_path}` }} style={{ width: '100%', height: '100%' }} />
+          <Image source={{ uri: `${BASE_URL}/files/${userData.avatar_path}` }} style={{ width: '100%', height: '100%' }} />
         </View>
         <View style={styles.avatarView}>
-          <Image source={{ uri: `http://192.168.15.13:3000/files/${userData.avatar_path}` }} style={styles.profilePic} />
+          <Image source={{ uri: `${BASE_URL}/files/${userData.avatar_path}` }} style={styles.profilePic} />
           <Text style={styles.avatarText}>{`${userData.first_name} ${userData.last_name}`}</Text>
           <StarRating
             disabled={false}

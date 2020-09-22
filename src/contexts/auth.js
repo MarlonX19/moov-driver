@@ -80,6 +80,39 @@ export const AuthProvider = ({ children }) => {
       });
   }
 
+
+  async function updateUserPhoto(formData) {
+
+    let options = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+
+    console.log(formData);
+
+    return api.put("/driverPhoto", formData, options)
+      .then(async function (response) {
+        console.log(response.data[0]);
+        console.log('aqui sucesso para atualizar foto do driver')
+        // try {
+        //   await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(response.data[0]));
+        //   await AsyncStorage.setItem('@RNAuth:token', response.data[0].push_id);
+        // } catch (error) {
+        //   console.log(error);
+        // }
+        return { message: 'updated' }
+
+      })
+      .catch(function (error) {
+        console.log(error.message);
+        return { message: 'error' }
+
+      });
+  }
+
+
+
   function sayHi() {
     alert('ola')
   }
@@ -92,7 +125,8 @@ export const AuthProvider = ({ children }) => {
       signOut,
       loading,
       sayHi,
-      updateUser
+      updateUser,
+      updateUserPhoto
     }} >
       {children}
     </AuthContext.Provider>

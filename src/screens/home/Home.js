@@ -6,6 +6,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import MapView, { Marker } from 'react-native-maps';
 import io from 'socket.io-client';
 
+import { BASE_URL } from '../../../constants';
+
 import MainHeader from '../../components/MainHeader';
 
 import AuthContext from '../../contexts/auth';

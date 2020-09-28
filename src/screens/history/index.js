@@ -63,6 +63,26 @@ function index (props) {
   }
 
 
+  function generateStatus(item){
+    if(item.canceled){
+      return 'cancelado';
+    }
+
+    if(item.delivered){
+      return 'concluído';
+    }
+
+    if(item.accepted && !item.delivered){
+      return 'em andamento';
+    }
+
+    if(!item.accepted && !item.delivered){
+      return 'aguardando';
+    }
+  }
+
+
+
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
@@ -72,10 +92,10 @@ function index (props) {
           <View style={styles.cardHead}>
             <Text style={[styles.headText,
             {
-              color: item.delivered === 'Concluído' ?
+              color: item.delivered ?
                 'green' :
                 'orange'
-            }]}>{item.delivered ? 'Concluído' : 'em andamento'}</Text>
+            }]}>{generateStatus(item)}</Text>
             <Text style={styles.headText}>R${parseFloat(item.value).toFixed(2)}</Text>
           </View>
           <View style={styles.mainInfo}>

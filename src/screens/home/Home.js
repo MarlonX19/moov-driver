@@ -33,7 +33,7 @@ export default function Home(props) {
   const { user } = useContext(AuthContext);
 
   useEffect(()=>{
-    console.log('aqui');
+    console.log('===dados do cliente usuario aqui na tela home do moov driver=====');
     console.log(clientData)
   }, [clientData])
 
@@ -160,7 +160,7 @@ export default function Home(props) {
 
 
   useEffect(() => {
-    let skt = io('https://moov-back-end.herokuapp.com/motoristas')
+    let skt = io('http://192.168.15.15:3000/motoristas')
     setSocket(skt);
 
     getLocation();
@@ -223,7 +223,7 @@ export default function Home(props) {
 
 
   async function handleAccept() {
-    const response = await api.post('/delivery', {
+    const response = await api.put('/delivery', {
       accepted: true,
       delivered: false,
       value: clientData?.value,

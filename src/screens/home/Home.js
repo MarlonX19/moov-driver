@@ -32,7 +32,8 @@ export default function Home(props) {
 
   const { user } = useContext(AuthContext);
 
-  useEffect(()=>{
+
+  useEffect(() => {
     console.log('===dados do cliente usuario aqui na tela home do moov driver=====');
     console.log(clientData)
   }, [clientData])
@@ -158,9 +159,21 @@ export default function Home(props) {
     }
   }
 
+  async function updateDriverPosition(lat, long) {
+    let driverData = {
+      latitude: lat,
+      longitude: long,
+      id: user.id,
+    }
+    const response = await api.put('/drivers', {
+      driverData
+    })
+
+  }
+
 
   useEffect(() => {
-    let skt = io('http://192.168.15.15:3000/motoristas')
+    let skt = io('http://192.168.15.12:3000/motoristas')
     setSocket(skt);
 
     getLocation();
@@ -176,7 +189,7 @@ export default function Home(props) {
 
   useEffect(() => {
     if (socket) {
-      
+
       watchDriverPosition();
 
       socket.on('connected', (data, name) => {
@@ -198,9 +211,10 @@ export default function Home(props) {
       })
 
       socket.on('watchedPosition', (data) => {
-        console.log('posição aqui hahahaha')
-        console.log(data)
-      
+        console.log('nova posição capturada aqui')
+        console.log(data.coords.latitude, data.coords.longitude);
+        updateDriverPosition(data.coords.latitude, data.coords.longitude);
+
       })
 
     }

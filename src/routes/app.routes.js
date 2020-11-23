@@ -66,9 +66,9 @@ const AppRoutes = () => (
       itemStyle: { marginVertical: 10 },
     }}
   >
-    <AppDrawer.Screen name="Home" component={Home} />
-    <AppDrawer.Screen name="Profile" component={ProfileRoot} />
-    <AppDrawer.Screen name="History" component={HistoryRoot} />
+    <AppDrawer.Screen options={{ drawerLabel: 'Início' }} name="Home" component={Home} />
+    <AppDrawer.Screen options={{ drawerLabel: 'Perfil' }} name="Profile" component={ProfileRoot} />
+    <AppDrawer.Screen options={{ drawerLabel: 'Histórico' }} name="History" component={HistoryRoot} />
     <AppDrawer.Screen name="Ajuda" component={Help} />
   </AppDrawer.Navigator>
 )

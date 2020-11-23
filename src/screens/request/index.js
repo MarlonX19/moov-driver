@@ -101,10 +101,14 @@ function Request(props) {
           <Text style={styles.topTextDetails}>{moment(ride.date).format("DD/MM/YYYY hh:mm")}</Text>
           <Text style={styles.topTextDetails}>R${parseFloat(ride.value).toFixed(2)}</Text>
         </View>
-        <View style={styles.topViewDetails}>
-          <Text style={styles.topTextDelivered}>Entrega concluída em: </Text>
-          <Text style={styles.topTextDelivered}> {moment(ride.delivered_at).format("DD/MM/YYYY hh:mm")}</Text>
-        </View>
+        {
+            ride.delivered_at ?
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Text style={styles.topTextDelivered}>Entrega concluída em: </Text>
+                <Text style={styles.topTextDelivered}>{moment(ride.delivered_at).format("DD/MM/YYYY hh:mm")}</Text>
+              </View> :
+              <View />
+          }
         <View style={styles.bottomCard}>
           <View style={styles.fromTown}>
             <View style={[styles.markerView, { backgroundColor: 'red' }]}></View>

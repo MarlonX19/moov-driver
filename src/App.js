@@ -7,6 +7,8 @@ import Routes from './routes';
 import FlashMessage from "react-native-flash-message";
 
 export default function App() {
+
+
   return (
     <NavigationContainer>
       <AuthProvider>

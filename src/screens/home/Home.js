@@ -173,7 +173,7 @@ export default function Home(props) {
 
 
   useEffect(() => {
-    let skt = io('http://192.168.15.12:3000/motoristas')
+    let skt = io('http://192.168.15.11:3000/motoristas')
     setSocket(skt);
 
     getLocation();
